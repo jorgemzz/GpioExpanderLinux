@@ -45,7 +45,7 @@ int I2cDriver::mSelectSlave(uint8_t slaveAddress){
 	if(mOpen())
 		return -1;
 #ifdef I2C_DEBUG
-	std::cout << "I2cDriver::SelectSlave: " << slave << std::endl;
+	std::cout << "I2cDriver::SelectSlave: 0x" << std::hex << (int)slaveAddress << std::endl;
 #endif
 	if((ioctl(mI2cFd, I2C_SLAVE, slaveAddress)) < 0){
 		return -1;
@@ -56,7 +56,7 @@ int I2cDriver::mSelectSlave(uint8_t slaveAddress){
 
 int I2cDriver::ReadData(uint8_t slvAddr, uint8_t regAddress, uint8_t length){
 #ifdef I2C_DEBUG
-	std::cout << "I2cDriver::ReadData: address " << regAddress << ", length " << length << std::endl;
+	std::cout << "I2cDriver::ReadData: address 0x" << std::hex << (int)regAddress << ", length " << (int)length << std::endl;
 #endif
 	if(WriteData(slvAddr, regAddress, 1))
 		return -1;
@@ -67,7 +67,7 @@ int I2cDriver::ReadData(uint8_t slvAddr, uint8_t regAddress, uint8_t length){
 
 int I2cDriver::WriteData(uint8_t slvAddr, uint8_t regAddress, uint8_t length){
 #ifdef I2C_DEBUG
-	std::cout << "I2cDriver::WriteData: address " << regAddress << ", length " << length << std::endl;
+	std::cout << "I2cDriver::WriteData: address 0x" << std::hex << (int)regAddress << ", length " << (int)length << std::endl;
 #endif
 	if(mSelectSlave(slvAddr))
 		return -1;

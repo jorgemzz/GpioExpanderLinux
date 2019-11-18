@@ -17,6 +17,6 @@ int main() {
 	I2cDriver myDevice(1);
 	if(myDevice.ReadData(0x20, 0x00, 1))
 		return -1;
-	cout << "Readed data: " << myDevice.Buffer[0] << endl;
+	cout << "Readed data: 0x" << std::hex  << (int)myDevice.Buffer[0] << endl;
 	return 0;
 }
