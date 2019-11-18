@@ -72,6 +72,7 @@ int I2cDriver::ReadData(uint8_t slvAddr, uint8_t regAddress, uint8_t length){
 #endif
 		return -1;
 	}
+	return 0;
 }
 
 int I2cDriver::WriteData(uint8_t slvAddr, uint8_t regAddress, uint8_t length){
