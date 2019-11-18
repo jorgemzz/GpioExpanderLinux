@@ -22,9 +22,12 @@ int I2cDriver::mOpen(){
 	std::string portName = "/dev/i2c-" + std::to_string(mI2cBus);
 	if(!mI2cFd){
 #ifdef I2C_DEBUG
-		std::cout << "I2cDriver::mI2cFile: " << portName << std::endl;
+		std::cout << "I2cDriver::mOpen: " << portName << std::endl;
 #endif
 		if((mI2cFd = open(portName.c_str(), O_RDWR)) < 0){
+#ifdef I2C_DEBUG
+		std::cout << "I2cDriver::mOpen: " << "Failed to open the i2c bus" << std::endl;
+#endif
 			mI2cFd = 0;
 			return -1;
 		}
@@ -48,6 +51,9 @@ int I2cDriver::mSelectSlave(uint8_t slaveAddress){
 	std::cout << "I2cDriver::SelectSlave: 0x" << std::hex << (int)slaveAddress << std::endl;
 #endif
 	if((ioctl(mI2cFd, I2C_SLAVE, slaveAddress)) < 0){
+#ifdef I2C_DEBUG
+		std::cout << "I2cDriver::SelectSlave: " << "Failed to acquire bus access and/or talk to slave" << std::endl;
+#endif
 		return -1;
 	}
 	mSlaveAddress = slaveAddress;
@@ -61,6 +67,9 @@ int I2cDriver::ReadData(uint8_t slvAddr, uint8_t regAddress, uint8_t length){
 	if(WriteData(slvAddr, regAddress, 1))
 		return -1;
 	if(read(mI2cFd, Buffer, length) != length){
+#ifdef I2C_DEBUG
+		std::cout << "I2cDriver::ReadData: " << "Failed to read from the i2c bus" << std::endl;
+#endif
 		return -1;
 	}
 }
@@ -73,6 +82,9 @@ int I2cDriver::WriteData(uint8_t slvAddr, uint8_t regAddress, uint8_t length){
 		return -1;
 	Buffer[0] = regAddress;
 	if(write(mI2cFd, Buffer, length) != length){
+#ifdef I2C_DEBUG
+		std::cout << "I2cDriver::WriteData: " << "Failed to write from the i2c bus" << std::endl;
+#endif
 		return -1;
 	}
 	return 0;
