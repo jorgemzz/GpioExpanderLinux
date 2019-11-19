@@ -78,6 +78,8 @@ int I2cDriver::ReadData(uint8_t slvAddr, uint8_t regAddress, uint8_t length){
 int I2cDriver::WriteData(uint8_t slvAddr, uint8_t regAddress, uint8_t length){
 #ifdef I2C_DEBUG
 	std::cout << "I2cDriver::WriteData: address 0x" << std::hex << (int)regAddress << ", length " << (int)length << std::endl;
+	for(int j=1; j < length; j++)
+		std::cout << "\tData[" << j << "]=" << std::hex <<  (int)Buffer[j] << std::endl;
 #endif
 	if(mSelectSlave(slvAddr))
 		return -1;
