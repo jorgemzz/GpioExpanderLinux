@@ -8,15 +8,21 @@
 
 #include <iostream>
 
-#include "I2cDriver/I2cDriver.h"
+#include "Max7315Driver/Max7315Driver.h"
 
 using namespace std;
 
 int main() {
 	cout << "GPIO Expander example" << endl;
-	I2cDriver myDevice(1);
-	if(myDevice.ReadData(0x20, 0x00, 1))
-		return -1;
-	cout << "Readed data: 0x" << std::hex  << (int)myDevice.Buffer[0] << endl;
+	Max7315Driver myGpio(1);
+	myGpio.PinMode(1, OUTPUT);
+	Nibble_Reg duty;
+	duty.H_NIBBLE = 0x00;
+	duty.L_NIBBLE = 0x00;
+	myGpio.PwmMode(1, CUSTOM_PWM, duty);
+	//cout << "Readed data: "  << myGpio.DigitalRead(1) << endl;
+	//cout << "Writting data ..." << endl;
+	//myGpio.DigitalWrite(1, 0);
+	//cout << "Readed data: "  << myGpio.DigitalRead(1) << endl;
 	return 0;
 }
