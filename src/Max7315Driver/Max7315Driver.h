@@ -21,7 +21,7 @@
 #define MAX7315_INTENSITY_START_REGISTER 0x10
 
 enum PinModes {INPUT, OUTPUT};
-enum PwmModes {WITHOUT_PWM, CUSTOM_PWM, GLOBAL_PWM};
+enum PwmModes {WITHOUT_PWM, SINGLE_PWM, GLOBAL_PWM};
 
 union Config_Reg{
 	uint8_t all;
